@@ -23,6 +23,108 @@ Important:
 -   During the **Memory Creation Phase**, declarations are processed
     before execution begins.
 
+## 📝 Declaration vs Assignment
+
+One line of code can actually contain **two separate operations**.
+
+Example:
+
+```javascript
+var a = 10;
+```
+
+JavaScript treats it as:
+
+### 1. Declaration
+
+```javascript
+var a;
+```
+
+- Creates a variable named `a`.
+- Happens during the **Memory Creation Phase**.
+- Memory is allocated for the variable.
+- Since it's a `var`, JavaScript initializes it with `undefined`.
+
+Memory after declaration:
+
+```
+a → undefined
+```
+
+---
+
+### 2. Assignment
+
+```javascript
+a = 10;
+```
+
+- Assigns the value `10` to the variable.
+- Happens during the **Execution Phase**.
+- Updates the value stored in memory.
+
+Memory after assignment:
+
+```
+a → 10
+```
+
+---
+
+## 🎯 Important Rule
+
+> **Hoisting only affects declarations, not assignments.**
+
+That's why the following code:
+
+```javascript
+console.log(a);
+
+var a = 10;
+```
+
+behaves as if JavaScript executed:
+
+```javascript
+var a;          // Declaration (Memory Creation Phase)
+
+console.log(a); // undefined
+
+a = 10;         // Assignment (Execution Phase)
+```
+
+### Output
+
+```text
+undefined
+```
+
+---
+
+## 📌 Remember
+
+Every variable declaration like this:
+
+```javascript
+var a = 10;
+```
+
+is internally split into:
+
+```javascript
+// Memory Creation Phase
+var a;
+
+// Execution Phase
+a = 10;
+```
+
+**Declaration = Create the variable**
+
+**Assignment = Put a value into the variable**
+
+Hoisting only moves (processes) the **declaration**, **not** the **assignment**.
 ------------------------------------------------------------------------
 
 # 2. Hoisting with `var`
