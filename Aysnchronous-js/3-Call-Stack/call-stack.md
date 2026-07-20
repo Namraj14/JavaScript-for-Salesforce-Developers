@@ -19,6 +19,7 @@ By the end of this lesson you will understand:
 
 A **Call Stack** is a stack data structure used by JavaScript to keep
 track of which function is currently executing.
+The Call Stack is a data structure that JavaScript uses to keep track of which function is currently executing and which function should execute next.
 
 JavaScript is single-threaded, so there is only one Call Stack.
 
