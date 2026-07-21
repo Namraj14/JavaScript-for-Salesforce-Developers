@@ -448,6 +448,154 @@ Create:
 Use `Promise.any()`.
 
 ------------------------------------------------------------------------
+## 1. Promise.all()
+
+Waits for **all** Promises to resolve.
+
+If any Promise rejects, the entire Promise rejects.
+
+``` javascript
+Promise.all([
+  Promise.resolve("A"),
+  Promise.resolve("B"),
+  Promise.resolve("C")
+]).then(console.log);
+```
+
+Output
+
+``` text
+["A","B","C"]
+```
+
+Use when every result is required.
+
+------------------------------------------------------------------------
+
+## 2. Promise.allSettled()
+
+Waits until every Promise finishes, regardless of success or failure.
+
+``` javascript
+Promise.allSettled([
+  Promise.resolve("A"),
+  Promise.reject("Error")
+]).then(console.log);
+```
+
+Returns objects describing each result.
+
+Use when you need every outcome.
+
+------------------------------------------------------------------------
+
+## 3. Promise.race()
+
+Returns the result of the first Promise to settle.
+
+``` javascript
+Promise.race([
+  new Promise(r => setTimeout(()=>r("Fast"),100)),
+  new Promise(r => setTimeout(()=>r("Slow"),500))
+]).then(console.log);
+```
+
+Output
+
+``` text
+Fast
+```
+
+Useful for timeouts.
+
+------------------------------------------------------------------------
+
+## 4. Promise.any()
+
+Returns the first fulfilled Promise.
+
+Rejected Promises are ignored unless all reject.
+
+``` javascript
+Promise.any([
+  Promise.reject("A"),
+  Promise.resolve("Success"),
+  Promise.resolve("Another")
+]).then(console.log);
+```
+
+Output
+
+``` text
+Success
+```
+
+------------------------------------------------------------------------
+
+## Comparison
+
+  Method       Waits For         Rejects When
+  ------------ ----------------- -----------------------
+  all          All fulfilled     First rejection
+  allSettled   All settled       Never
+  race         First settled     First settled rejects
+  any          First fulfilled   All reject
+
+------------------------------------------------------------------------
+
+## Real-World Analogy
+
+-   all() → Every team member must finish.
+-   allSettled() → Collect everyone's report.
+-   race() → First taxi to arrive.
+-   any() → First successful interview offer.
+
+------------------------------------------------------------------------
+
+## Interview Questions
+
+-   Difference between all() and allSettled()?
+-   Difference between race() and any()?
+-   Which method is best for parallel API calls?
+-   Which method is best for implementing timeouts?
+
+------------------------------------------------------------------------
+
+## Practice
+
+1.  When would you use Promise.all()?
+2.  Explain Promise.any().
+3.  Compare race() and any().
+4.  Why does allSettled() exist?
+
+------------------------------------------------------------------------
+
+## Coding Exercise
+
+Predict the output:
+
+``` javascript
+Promise.all([
+  Promise.resolve(1),
+  Promise.resolve(2),
+  Promise.resolve(3)
+]).then(console.log);
+```
+
+------------------------------------------------------------------------
+
+## Revision Notes
+
+-   all(): all must succeed.
+-   allSettled(): gather every result.
+-   race(): first settled wins.
+-   any(): first successful result wins.
+
+------------------------------------------------------------------------
+
+## Next Lesson
+
+Microtask Queue
 
 # Key Takeaways
 
