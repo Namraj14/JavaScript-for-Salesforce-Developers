@@ -289,6 +289,187 @@ someFunction(value)
 ```
 
 ------------------------------------------------------------------------
+## 1. What is Promise Chaining?
+
+Each call to `.then()` returns **a new Promise**.
+
+This allows multiple asynchronous operations to be written in sequence.
+
+``` javascript
+login()
+  .then(fetchProfile)
+  .then(fetchOrders)
+  .then(showOrders)
+  .catch(console.error);
+```
+
+------------------------------------------------------------------------
+
+## 2. Returning a Value
+
+``` javascript
+Promise.resolve(10)
+  .then(value => value * 2)
+  .then(value => console.log(value));
+```
+
+Output
+
+``` text
+20
+```
+
+Returning a normal value automatically resolves the next Promise.
+
+------------------------------------------------------------------------
+
+## 3. Returning Another Promise
+
+``` javascript
+function getUser() {
+  return Promise.resolve({name: "Namraj"});
+}
+
+getUser()
+  .then(user => Promise.resolve(user.name))
+  .then(name => console.log(name));
+```
+
+Output
+
+``` text
+Namraj
+```
+
+The next `then()` waits until the returned Promise finishes.
+
+------------------------------------------------------------------------
+
+## 4. Error Propagation
+
+``` javascript
+Promise.resolve()
+  .then(() => {
+    throw new Error("Something failed");
+  })
+  .catch(err => console.log(err.message));
+```
+
+Output
+
+``` text
+Something failed
+```
+
+Errors automatically skip remaining `then()` handlers until a matching
+`catch()`.
+
+------------------------------------------------------------------------
+
+## 5. Best Practices
+
+-   Always return values from `then()` if the next step needs them.
+-   Return Promises instead of creating nested `then()` blocks.
+-   Keep one `catch()` near the end of the chain.
+-   Use `finally()` for cleanup only.
+
+------------------------------------------------------------------------
+
+## Real-World Analogy
+
+Think of an assembly line.
+
+Each worker finishes one step and passes the product to the next worker.
+
+If one worker finds a defect, the product is sent to the quality-control
+desk (`catch()`).
+
+------------------------------------------------------------------------
+
+## Interview Questions
+
+### Why does each `then()` return a new Promise?
+
+To allow asynchronous operations to be chained.
+
+### What happens if you throw an error inside `then()`?
+
+The Promise becomes rejected and control moves to the nearest `catch()`.
+
+### What happens when a Promise is returned from `then()`?
+
+The next `then()` waits for it to settle.
+
+------------------------------------------------------------------------
+
+## Practice Questions
+
+1.  Explain Promise chaining.
+2.  Why should you return values from `then()`?
+3.  Explain error propagation.
+4.  Why is one `catch()` usually enough?
+
+------------------------------------------------------------------------
+
+## Coding Exercise
+
+Predict the output.
+
+``` javascript
+Promise.resolve(5)
+  .then(x => x + 5)
+  .then(x => {
+    console.log(x);
+    return x * 2;
+  })
+  .then(console.log);
+```
+
+------------------------------------------------------------------------
+
+## Quick Quiz
+
+1.  `then()` returns:
+
+A. undefined
+
+B. New Promise
+
+C. Boolean
+
+D. Object
+
+2.  Throwing inside `then()`:
+
+A. Stops JavaScript
+
+B. Rejects the Promise
+
+C. Creates another callback
+
+D. Does nothing
+
+3.  Which is recommended?
+
+A. Nested then()
+
+B. Multiple catch() after every then()
+
+C. Return Promises from then()
+
+D. Ignore errors
+
+------------------------------------------------------------------------
+
+## Revision Notes
+
+-   Every `then()` returns a new Promise.
+-   Returning values passes them to the next `then()`.
+-   Returning a Promise pauses the chain until it settles.
+-   Errors automatically propagate to `catch()`.
+-   Promise chains are flatter and easier to maintain.
+
+------------------------------------------------------------------------
 
 ## Key Takeaways
 
